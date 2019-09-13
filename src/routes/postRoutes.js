@@ -1,4 +1,4 @@
-import { addNewPost, getPosts, getLatestPosts, getPostWithId, updatePost, deletePost } from '../controllers/postController';
+import { addNewPost, getPosts, getLatestPosts, getPostWithId, updatePost, deletePost, getThemes } from '../controllers/postController';
 
 /** Injecting app object, because we're going to use routes function in order to pass the endpoints created here. */
 const routes = (app) => {
@@ -16,6 +16,13 @@ const routes = (app) => {
             console.log(`Request type: ${req.method}`);
             next();
         }, getLatestPosts)
+        
+    app.route('/themes')
+        .get((req, res, next) => {
+            console.log(`Request from: ${req.originalUrl}`);
+            console.log(`Request type: ${req.method}`);
+            next();
+        }, getThemes)
     
     app.route('/posts/:postId')
         .get(getPostWithId) // get specific post

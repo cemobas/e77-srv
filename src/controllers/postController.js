@@ -32,6 +32,22 @@ export const getLatestPosts = (req, res) => {
     });
 };
 
+export const getThemes = (req, res) => {
+    Post.aggregate([
+        {
+            $group: {
+                _id: '$theme',
+            }
+        }
+    ], function (err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+};
+
 export const getPostWithId = (req, res) => {
     Post.findById(req.params.postId, (err, post) => {
         if (err) {
