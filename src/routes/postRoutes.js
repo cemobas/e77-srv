@@ -4,28 +4,28 @@ import { addNewPost, getPosts, getLatestPosts, getPostWithId, updatePost, delete
 const routes = (app) => {
     app.route('/posts')
         .get((req, res, next) => {
-            console.log(`Request from: ${req.originalUrl}`);
-            console.log(`Request type: ${req.method}`);
+            console.log(`Request from: ${req.originalUrl} | type: ${req.method}`);
             next();
         }, getPosts)
         .post(addNewPost);
         
     app.route('/latestPosts/:skip/:limit')
         .get((req, res, next) => {
-            console.log(`Request from: ${req.originalUrl}`);
-            console.log(`Request type: ${req.method}`);
+            console.log(`Request from: ${req.originalUrl} |  type: ${req.method}`);
             next();
         }, getLatestPosts)
         
     app.route('/themes')
         .get((req, res, next) => {
-            console.log(`Request from: ${req.originalUrl}`);
-            console.log(`Request type: ${req.method}`);
+            console.log(`Request from: ${req.originalUrl} |  type: ${req.method}`);
             next();
         }, getThemes)
     
     app.route('/posts/:postId')
-        .get(getPostWithId) // get specific post
+        .get((req, res, next) => {
+            console.log(`Request from: ${req.originalUrl} |  type: ${req.method}`);
+            next(); // without next, GET url can only be 'posts?postId=xyz', but this way we can call it as 'posts/xyz'
+        }, getPostWithId) // get specific post
         .put(updatePost) // put request
         .delete(deletePost);
 }
