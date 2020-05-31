@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import { AuthorSchema } from '../models/authorModel';
 import { PostSchema } from '../models/postModel';
 
+const Author = mongoose.model('Author', AuthorSchema);
 const Post = mongoose.model('Post', PostSchema);
 
 export const addNewPost = (req, res) => {
@@ -49,7 +51,7 @@ export const getThemes = (req, res) => {
 };
 
 export const getPostWithId = (req, res) => {
-    Post.findById(req.params.postId, (err, post) => {
+    Post.findOne({ index: req.params.postId }, (err, post) => {
         if (err) {
             res.send(err);
         }
@@ -59,7 +61,7 @@ export const getPostWithId = (req, res) => {
 
 export const updatePost = (req, res) => {
     /** "new: true" means you want the new (updated) data in the response (not the old data) */
-    Post.findOneAndUpdate({ _id: req.params.postId }, req.body, { new: true }, (err, post) => {
+    Post.findOneAndUpdate({ index: req.params.postId }, req.body, { new: true }, (err, post) => {
         if (err) {
             res.send(err);
         }
@@ -68,10 +70,19 @@ export const updatePost = (req, res) => {
 }
 
 export const deletePost = (req, res) => {
-    Post.remove({ _id: req.params.postId }, (err, post) => {
+    Post.remove({ index: req.params.postId }, (err, post) => {
         if (err) {
             res.send(err);
         }
         res.json({ message: 'Successfully deleted post' });
     })
+}
+
+export const getAuthorWithId = (req, res) => {
+    Author.findOne({ nickname: req.params.nickname }, (err, author) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(author);
+    });
 }

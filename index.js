@@ -11,7 +11,7 @@ const PORT = 8080;
 mongoose.Promise = global.Promise; // we make a connection and we don't wait for it.
 
 // define a db that doesn't exist and it will be created automatically with the first POST operation.
-mongoose.connect('mongodb://localhost/e77');
+mongoose.connect(`${process.env.MONGODB_URI}`);
 
 // bodyparser setup: setting up json to work
 app.use(bodyParser.json());
