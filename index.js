@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import routes from './src/routes/postRoutes';
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 // mongoose connection
 mongoose.Promise = global.Promise; // we make a connection and we don't wait for it.
