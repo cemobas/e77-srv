@@ -6,12 +6,15 @@ import routes from './src/routes/postRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/e77';
 
 // mongoose connection
 mongoose.Promise = global.Promise; // we make a connection and we don't wait for it.
 
 // define a db that doesn't exist and it will be created automatically with the first POST operation.
-mongoose.connect(`${process.env.MONGODB_URI}`);
+mongoose.connect(`${MONGO}`, function(err) {
+    if (err) throw err;
+});
 
 // bodyparser setup: setting up json to work
 app.use(bodyParser.json());
