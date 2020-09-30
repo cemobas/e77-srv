@@ -34,11 +34,20 @@ export const getLatestPosts = (req, res) => {
     });
 };
 
-export const getThemes = (req, res) => {
+export const getLatestPostsByCategory = (req, res) => {
+        Post.find({'category': req.params.category}, [], { skip: parseInt(req.params.skip), limit: parseInt(req.params.limit), sort: { date: -1 } }, (err, posts) => {
+            if (err) {
+                res.send(err);
+            }
+            res.json(posts);
+        });
+};
+
+export const getCategories = (req, res) => {
     Post.aggregate([
         {
             $group: {
-                _id: '$theme',
+                _id: '$category',
             }
         }
     ], function (err, result) {

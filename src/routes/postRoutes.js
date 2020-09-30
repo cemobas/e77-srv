@@ -1,4 +1,4 @@
-import { addNewPost, getPosts, getLatestPosts, getPostWithId, updatePost, deletePost, getThemes, getAuthorWithId } from '../controllers/postController';
+import { addNewPost, getPosts, getLatestPosts, getLatestPostsByCategory, getPostWithId, updatePost, deletePost, getAuthorWithId, getCategories } from '../controllers/postController';
 
 /** Injecting app object, because we're going to use routes function in order to pass the endpoints created here. */
 const routes = (app) => {
@@ -15,11 +15,18 @@ const routes = (app) => {
             next();
         }, getLatestPosts)
         
-    app.route('/themes')
+        
+    app.route('/latestPosts/:category/:skip/:limit')
         .get((req, res, next) => {
             console.log(`Request from: ${req.originalUrl} |  type: ${req.method}`);
             next();
-        }, getThemes)
+        }, getLatestPostsByCategory)
+    
+    app.route('/categories')
+        .get((req, res, next) => {
+            console.log(`Request from: ${req.originalUrl} |  type: ${req.method}`);
+            next();
+        }, getCategories)
     
     app.route('/posts/:postId')
         .get((req, res, next) => {

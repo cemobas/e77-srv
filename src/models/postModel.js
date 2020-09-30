@@ -26,6 +26,14 @@ export const PostSchema = new Schema({
         type: String,
         required: 'Enter the short explanation'
     },
+    illustration: {
+        type: String,
+        required: 'Enter the image path of the post'
+    },
+    category: {
+        type: String,
+        required: 'Enter article\'s category'
+    },
     date: {
         type: Date,
         required: 'Enter when it is posted'
